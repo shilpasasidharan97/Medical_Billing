@@ -32,10 +32,12 @@ def add_pharmacist(request):
     return render(request,'add_pharmacist.html')
 
 def view_medicine(request):
-    return render(request,'view_med.html')
+    medicines=Medicines.objects.all()
+    return render(request,'view_med.html',{'med':medicines,})
 
 def purchase_list(request):
-    return render(request,'purchase_list.html')
+    med=Medicines.objects.filter(quantity__lte=10)
+    return render(request,'purchase_list.html',{'med':med,})
 
 def billing(request):
     return render(request,'billing.html')

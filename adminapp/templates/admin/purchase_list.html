@@ -18,12 +18,14 @@
               </tr>
             </thead>
             <tbody>
+              {% for i in med%}
               <tr>
-                <th scope="row"></th>
-                <td></td>
-                <td></td>
-                <td></td>
+                <th scope="row">{{i.id}}</th>
+                <td>{{i.name}}</td>
+                <td>{{i.purchase_cost}}</td>
+                <td>{{i.quantity}}</td>
               </tr>
+              {% endfor %}
             </tbody>
           </table>
     </div>

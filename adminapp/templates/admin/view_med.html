@@ -20,13 +20,15 @@
               </tr>
             </thead>
             <tbody>
+              {% for medicine in med%}
               <tr>
-                <th scope="row"></th>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
+                <th scope="row">{{medicine.id}}</th>
+                <td>{{medicine.name}}</td>
+                <td>{{medicine.purchase_cost}}</td>
+                <td>{{medicine.selling_cost}}</td>
+                <td>{{medicine.quantity}}</td>
               </tr>
+              {% endfor %}
             </tbody>
           </table>
     </div>
