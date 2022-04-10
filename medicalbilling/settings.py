@@ -39,7 +39,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'adminapp',
-    'pharmacist',
 ]
 
 MIDDLEWARE = [
@@ -59,7 +58,6 @@ TEMPLATES = [
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
             BASE_DIR/'adminapp/templates/admin',
-            BASE_DIR/'pharmacist/templates/pharmacist',
         ],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -129,7 +127,6 @@ STATIC_URL = 'static/'
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, '/adminapp/static'),
-    os.path.join(BASE_DIR,'/pharmacist/static'),
 ]
 
 # Default primary key field type
