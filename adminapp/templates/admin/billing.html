@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -11,9 +12,33 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
         crossorigin="anonymous"></script>
+
+    <!-- AJAX JQUERY CDN -->
+    <script src="https://code.jquery.com/jquery-3.6.0.js"
+        integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+
+    <style>
+        .formbill {
+            font-family: "Roboto", sans-serif;
+            position: relative;
+            z-index: 1;
+            background: #fffdfd;
+            opacity: 100%;
+            width: 80%;
+            min-height: 700px;
+            margin: 100px auto 100px;
+            padding: 10px 45px 30px 45px;
+            text-align: center;
+            box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+            border-radius: 15px;
+            margin-top: 20px;
+
+        }
+    </style>
 </head>
+
 <body>
-    <div class="cpntainer-fluid">
+    <div class="container-fluid">
         <div class="row">
             <nav class="navbar navbar-expand-lg text-uppercase " style="background-color:rgb(24, 30, 140);">
                 <div class="container-fluid">
@@ -44,7 +69,205 @@
                 </div>
             </nav>
         </div>
+
+
+
+        <!-- Billing Form -->
+        <div class="formbill"><br>
+
+            <form method="POST">
+                {% csrf_token %}
+
+                <h2
+                    style="font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif; font-weight: bolder; margin-bottom: 40px;">
+                    BILLING
+                </h2><br>
+                <label for="">Bill Number</label><a name="billnum" href="" style="text-decoration: none;color: black;"
+                    class="form-control col-lg-10 disabled">{{billnum}}</a><br>
+
+                <label>Customer Name:</label>
+                <input type="text" name="cname" style="margin-right: 250px;">
+                
+                <label>Phone number:</label>
+                <input type="number" name="phn">
+
+                <label style="margin-left: 660px; margin-top: 20px;">date:</label>
+                <input type="datetime" name="date">
+
+                <table class="table" style="margin-top: 20px;">
+                    <tr>
+                        <th>Sl no</th>
+                        <th>Medicine Name</th>
+                        <th>Quantity</th>
+                        <th>Price</th>
+                        <th>Item Total</th>
+                    </tr>
+                    <tr>
+                        <th>1</th>
+                        <td>
+                            <select name="mname" id="mname" class="form-control col-lg-10">
+                                {% for med in med%}
+                                <option value="{{med.id}}">{{med.name}}</option>
+                                {% endfor %}
+                            </select>
+                        </td>
+
+                        <td>
+                            <input type="number" name="quantity" id="quantity" min="1" max="{{med.quantity}}">
+                        </td>
+
+                        <td>
+                            <input type="text" name="unitprice" id="unitprice">
+                        </td>
+
+
+
+                        <td>
+                            <input type="text" id="itemprice" name="itemprice">
+                        </td>
+                    </tr>
+
+                </table>
+                <table style="float: right;margin-left: 300px;">
+                    <tr>
+                        <td>GST:</td>
+                        <td><input  id="gst" value="{{sled.gst}}" type="text">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Grand Total:
+                        <td><input id="gtotal" type="text"></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <div class="d-grid gap-2 col-6 mx-auto">
+                                <button class="btn btn-success" type="submit">Generate Bill</button>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+
+
+
+            </form>
+        </div>
+
     </div>
-    </div>
+
+
+
+
+    <script>
+        $(document).ready(function () {
+            $('#mname').change(function () {
+                $.ajax({
+                    url: 'http://127.0.0.1:8000/price',
+                    data: {
+                        'id': $(this).val()
+                    },
+                    type: 'get',
+                    success: function (response) {
+                        var price = Number(response)
+                        $('#unitprice').val(price)
+                        // document.getElementById('price').value=response;
+                    }
+                })
+            })
+        })
+
+        $(document).ready(function () {
+            $('#quantity').change(function () {
+                $.ajax({
+                    url: 'http://127.0.0.1:8000/total',
+                    data: {
+                        'qty': $(this).val(),
+                        'uprice': $('#unitprice').val()
+
+                    },
+                    type: 'get',
+                    success: function (response) {
+                        var total_price = Number(response)
+                        $('#itemprice').val(total_price)
+                    },
+                })
+            })
+
+        })
+        $(document).ready(function (){
+        $('#quantity').change(function (){
+            $.ajax({
+                url: 'http://127.0.0.1:8000/gst',
+                data: {
+                    'id': $('#mname').val() ,
+                    'qty': $('#quantity').val() ,
+
+                },
+                type: 'get',
+                success: function (response) {
+                   var gst = Number(response)
+                   $('#gst').val(gst)
+                }
+            })
+            
+        })
+
+    })
+
+    $(document).ready(function (){
+        $('#quantity').change(function (){
+            $.ajax({
+                url: 'http://127.0.0.1:8000/grandtotal',
+                data: {
+                    'id': $('#mname').val() ,
+                    'qty': $('#quantity').val() ,
+
+                },
+                type: 'get',
+                success: function (response) {
+                   var grand_total = Number(response)
+                   $('#gtotal').val(grand_total)
+                }
+            })
+            
+        })
+
+    })
+
+    </script>
+
+
+
+
 </body>
+
+
+
+<!-- <script>
+var priceMaterial = document.getElementById("unitprice");
+
+document.getElementById("medname").addEventListener('change', function() {
+  var selected = this.options[this.selectedIndex];
+  var txt = selected.dataset.price;
+  priceMaterial.innerText = txt;
+});
+</script> -->
+
+<!-- <script>
+        $(document).ready(function(){
+            $('#mname').change(function(){
+                $.ajax({
+                    url:'http://127.0.0.1:8000/state/statecheck',
+                    data:{
+                        'id':$(this).val()
+                    },
+                    type:'GET',
+                    success:function(response){
+                        $('#district').html(response)
+                    }
+                })
+            })
+        })
+</script> -->
+
+
 </html>

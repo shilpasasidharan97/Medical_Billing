@@ -1,4 +1,6 @@
+from random import Random, random
 from django.shortcuts import render
+import random
 
 from adminapp.models import Medicines
 
@@ -23,8 +25,6 @@ def add_medicine(request):
         new_medicine.save()
 
         msg="The medicine is added to the list"
-    else:
-        msg="The medicine is already exists in the list"
 
     return render(request,'add_medicine.html',{'message':msg,})
 
@@ -40,4 +40,72 @@ def purchase_list(request):
     return render(request,'purchase_list.html',{'med':med,})
 
 def billing(request):
-    return render(request,'billing.html')
+    # if 'name' in request.GET:
+    #     name=request.GET['name']
+    #     medicines=Medicines.objects.filter(name__icontaines=name)
+    # else:
+    #     medicines=Medicines.objects.all()
+
+    billnumber=""
+    rand=random.randint(10000,99999)
+    billnumber='abc'+str(rand)
+
+    medicines=Medicines.objects.all()
+
+    return render(request,'billing.html',{'billnum':billnumber,'med':medicines,})
+    # return render(request,'billing.html',{'billnum':billnumber,'med':medicines})
+
+
+def price_show(request):
+    id = request.GET['id']
+    # print(id)
+    try:
+        price = Medicines.objects.get(id=id)
+        print(price)
+        return render(request,'price.html',{'price':price.selling_cost})
+    except:
+        return render(request,'price.html',{'price':0})
+
+    
+def total_price(request):
+    price = request.GET['uprice']
+    qty = request.GET['qty']
+    try:
+        total_price = int(qty) * int(price)
+        print(total_price)
+        gst = (total_price * 5)/100
+        grand_total = int(total_price)+int(gst)
+        # print(total_price)
+        # print(gst)
+        # print(grand_total)
+        return render(request,'total.html',{'total_price':total_price})
+    except:
+        return render(request,'total.html',{'total_price':0})
+
+def gst(request):
+    
+    med = request.GET['id']
+    qty = request.GET['qty']
+
+    medicine = Medicines.objects.get(id=med)
+    selling_cost = medicine.selling_cost
+    total = int(selling_cost) * int(qty)
+    gst = (total * 5)/100
+    print(gst)
+
+    return render(request,'gst.html',{'gst':gst,})
+
+def grand_total(request):
+    
+    med = request.GET['id']
+    qty = request.GET['qty']
+
+    medicine = Medicines.objects.get(id=med)
+    selling_cost = medicine.selling_cost
+    total = int(selling_cost) * int(qty)
+    gst = (total * 5)/100
+    grand_total = total + gst
+    print(grand_total)
+
+    return render(request,'grand_total.html',{'gtotal':grand_total,})
+
