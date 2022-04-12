@@ -117,13 +117,13 @@
                         </td>
 
                         <td>
-                            <input type="text" name="unitprice" id="unitprice">
+                            <input type="text" name="unitprice" id="unitprice" readonly>
                         </td>
 
 
 
                         <td>
-                            <input type="text" id="itemprice" name="itemprice">
+                            <input type="text" id="itemprice" name="itemprice" readonly>
                         </td>
                     </tr>
 
@@ -131,12 +131,12 @@
                 <table style="float: right;margin-left: 300px;">
                     <tr>
                         <td>GST:</td>
-                        <td><input  id="gst" value="{{sled.gst}}" type="text">
+                        <td><input  id="gst" type="text" readonly>
                         </td>
                     </tr>
                     <tr>
                         <td>Grand Total:
-                        <td><input id="gtotal" type="text"></td>
+                        <td><input id="grandtotal" type="text" readonly></td>
                     </tr>
                     <tr>
                         <td colspan="2">
@@ -225,7 +225,7 @@
                 type: 'get',
                 success: function (response) {
                    var grand_total = Number(response)
-                   $('#gtotal').val(grand_total)
+                   $('#grandtotal').val(grand_total)
                 }
             })
             

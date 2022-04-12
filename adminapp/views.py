@@ -91,7 +91,7 @@ def gst(request):
     selling_cost = medicine.selling_cost
     total = int(selling_cost) * int(qty)
     gst = (total * 5)/100
-    print(gst)
+    # print(gst)
 
     return render(request,'gst.html',{'gst':gst,})
 
@@ -107,5 +107,5 @@ def grand_total(request):
     grand_total = total + gst
     print(grand_total)
 
-    return render(request,'grand_total.html',{'gtotal':grand_total,})
+    return render(request,'grand_total.html',{'grand_total':grand_total,})
 
