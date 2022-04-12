@@ -22,7 +22,6 @@ class SaledMedicine(models.Model):
     Bill_number=models.CharField(max_length=100)
     customer_name=models.CharField(max_length=50)
     customer_phonenum=models.CharField(max_length=15)
-    # date=models.DateField(default=0)
     quantity=models.IntegerField()
     item_price=models.FloatField()
     gst=models.FloatField()

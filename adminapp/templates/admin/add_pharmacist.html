@@ -6,55 +6,57 @@
 
 
 <div class="mask d-flex align-items-center h-100 gradient-custom-3">
-    <div class="container h-100">
-      <div class="row d-flex justify-content-center align-items-center h-100">
-        <div class="col-12 col-md-9 col-lg-7 col-xl-6">
-          <div class="card" style="border-radius: 15px;box-shadow:5px 10px 20px grey ;">
-            <div class="card-body p-5">
-              <h2 class="text-uppercase text-center mb-5">add medicine</h2>
+  <div class="container h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col-12 col-md-9 col-lg-7 col-xl-6">
+        <div class="card" style="border-radius: 15px;box-shadow:5px 10px 20px grey ;">
+          <div class="card-body p-5">
+            <h2 class="text-uppercase text-center mb-5">add medicine</h2>
 
-              <form method="" action="">
-
-                <div class="row mb-4">
-                    <label for="inputEmail3" class="col-sm-4 col-form-label"> Name</label>
-                    <div class="col-sm-8">
-                      <input type="text" class="form-control" id="inputEmail3">
-                    </div>
+            <form method="" action="">
+              {% csrf_token %}
+              
+              <div class="row mb-4">
+                <label for="inputEmail3" class="col-sm-4 col-form-label"> Name</label>
+                <div class="col-sm-8">
+                  <input type="text" class="form-control" id="inputEmail3">
                 </div>
+              </div>
 
-                <div class="row mb-4">
-                    <label for="inputEmail3" class="col-sm-4 col-form-label">Phone Number</label>
-                    <div class="col-sm-8">
-                      <input type="text" class="form-control" id="inputEmail3">
-                    </div>
+              <div class="row mb-4">
+                <label for="inputEmail3" class="col-sm-4 col-form-label">Phone Number</label>
+                <div class="col-sm-8">
+                  <input type="text" class="form-control" id="inputEmail3">
                 </div>
+              </div>
 
-                
-                <div class="row mb-4">
-                    <label for="inputEmail3" class="col-sm-4 col-form-label">Username</label>
-                    <div class="col-sm-8">
-                      <input type="text" class="form-control" id="inputEmail3">
-                    </div>
+
+              <div class="row mb-4">
+                <label for="inputEmail3" class="col-sm-4 col-form-label">Username</label>
+                <div class="col-sm-8">
+                  <input type="text" class="form-control" id="inputEmail3">
                 </div>
+              </div>
 
-                <div class="row mb-4">
-                    <label for="inputEmail3" class="col-sm-4 col-form-label">Password</label>
-                    <div class="col-sm-8">
-                      <input type="text" class="form-control" id="inputEmail3">
-                    </div>
+              <div class="row mb-4">
+                <label for="inputEmail3" class="col-sm-4 col-form-label">Password</label>
+                <div class="col-sm-8">
+                  <input type="text" class="form-control" id="inputEmail3">
                 </div>
+              </div>
 
-                <div class="d-flex justify-content-center">
-                  <button type="button" class="btn btn btn-outline-success  btn-block gradient-custom-4 text-body">Register</button>
-                </div>
+              <div class="d-flex justify-content-center">
+                <button type="button"
+                  class="btn btn btn-outline-success  btn-block gradient-custom-4 text-body">Register</button>
+              </div>
 
-              </form>
+            </form>
 
-            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
+</div>
 
-{% endblock  %}
+{% endblock %}
